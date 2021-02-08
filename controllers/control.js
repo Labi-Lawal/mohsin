@@ -82,7 +82,8 @@ module.exports = (server)=>{
 
         newAccount.save((err, savedAccount)=>{
             if(savedAccount) {
-                console.log(`New account created ${savedAccount}`);
+                req.session.user = savedAccount;
+                console.log(`New account created ${savedAccount.username}`);
                 res.redirect('/');
             }
         });
