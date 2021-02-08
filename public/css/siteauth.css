@@ -124,3 +124,7 @@ div.signin button{
     transform: translate(24px, 0);
   }
 }
+.hidden{
+    display: none !important;
+}
+
