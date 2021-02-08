@@ -70,11 +70,13 @@ div.signin button{
     color: blue;
 }
 .lds-ellipsis {
-  display: inline-block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: relative;
   width: 50%;
   height: 80%;
-    border: 1px solid white;
+  border: 1px solid white;
 }
 .lds-ellipsis div {
   position: absolute;
