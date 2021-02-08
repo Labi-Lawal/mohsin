@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="/css/users.css">
+
+    <title>Document</title>
+</head>
+<body>
+    <%- include('../app/includes/header') %>
+
+    <section class="body">
+        <div class="top">
+            <button class="create-new-user">
+                <div class="material-icons">add</div>
+                Create New User
+            </button>
+        </div>
+
+        <div class="users-list grid-list">
+            <div class="user">
+                <img src="/images/user.png">
+                <div class="details">
+                    <div class="username">Username</div>
+                </div>
+            </div>
+            <div class="user">
+                <img src="/images/user.png">
+                <div class="details">
+                    <div class="username">Username</div>
+                </div>
+            </div>
+            <div class="user">
+                <img src="/images/user.png">
+                <div class="details">
+                    <div class="username">Username</div>
+                </div>
+            </div>
+            <div class="user">
+                <img src="/images/user.png">
+                <div class="details">
+                    <div class="username">Username</div>
+                </div>
+            </div>
+            <div class="user">
+                <img src="/images/user.png">
+                <div class="details">
+                    <div class="username">Username</div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="user-settings hidden">
+        
+    </section>
+
+    <section class="create-new-user hidden">
+        <div class="layer"></div>
+        <div class="form-box">
+            <div class="form">
+                <form onsubmit="return false;">
+                    <div>
+                        <div class="label">Username</div>
+                        <input type="text" name="username" class="username" required>
+                    </div>
+                    <div>
+                        <div class="label">Password</div>
+                        <input type="password" name="password" class="password" required>
+                    </div>
+                    
+                    <button class="create">Create New User</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <script src="/js/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+
+            $('button.create-new-user').click(function(){
+                $('section.create-new-user').removeClass('hidden');
+            });
+
+            $('button.create').click(function(){
+                var userDetails = {
+                    username : $('input.username').val(),
+                    password : $('input.password').val()
+                };
+
+                if(userDetails.username && userDetails.password){
+                    $.ajax({
+                        type: 'POST',
+                        url: '/createnewuser',
+                        dataType: 'json',
+                        data: userDetails,
+                        success: function(data){
+                            console.log(data.data);
+                        },
+                        error: function(data){}
+                    });
+                }
+            });
+
+            $('div.layer').click(function(){
+                $('section.create-new-user').addClass('hidden');
+            });
+        });
+    </script>
+</body>
+</html>
+
+

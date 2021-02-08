@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="/fonts/material-icons.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/siteauth.css">
+    
+    <title>MOHSIN</title>
+</head>
+<body>
+    <section class="body">
+        <div class="logo">MOHSIN</div>
+        <div class="form-box">
+            <div class="errormessage"></div>
+            <div>
+                <input type="text" class="userlogin" name="userlogin" placeholder="Email or Username">
+            </div>
+            <div>
+                <input type="password" class="password" name="password" placeholder="Password">
+            </div>
+            
+            <button type="submit" class="submit">SIGN IN</button>
+        </div>
+        <div class="signin">
+            <div>Don't have an account?</div>
+            <button><a href="/createaccount">CREATE ACCOUNT</a></button>
+        </div>
+    </section>
+
+    <script src="/js/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+           $('button.submit').click(function(){
+                var userDetails = {
+                    userlogin: $('input.userlogin').val(),
+                    password: $('input.password').val()
+                };
+
+                console.log(userDetails);
+
+                if(userDetails.userlogin && userDetails.password){
+                    console.log('here');
+                    $.ajax({
+                        type:'POST',
+                        url:'/signin',
+                        dataType: 'json',
+                        data: userDetails,
+                        success: (data)=>{
+                           if(!data.error){
+                                if(data.sessionType == 'user'){
+                                    window.location.pathname = '/app/workspace';
+                                }
+                                if(data.sessionType == 'admin'){
+                                    window.location.pathname = '/admin';
+                                }
+                           } else {
+                               $('div.errormessage').html(`${data.error}`);
+                           }
+                        },
+                        error: (data)=>{
+                            console.log(data);
+                        }
+                    });
+                }
+           });
+        });
+    </script>
+</body>
+</html>
