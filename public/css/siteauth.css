@@ -78,7 +78,6 @@ div.signin button{
 }
 .lds-ellipsis div {
   position: absolute;
-  top: 33px;
   width: 13px;
   height: 13px;
   border-radius: 50%;
