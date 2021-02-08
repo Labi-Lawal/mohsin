@@ -71,7 +71,7 @@ div.signin button{
 }
 .lds-ellipsis {
   position: relative;
-  border: 1px solid white;
+  width: 30%;
 }
 .lds-ellipsis div {
   position: absolute;
