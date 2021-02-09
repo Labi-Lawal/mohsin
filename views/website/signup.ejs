@@ -10,50 +10,77 @@
     <link rel="stylesheet" href="/css/siteauth.css">
     
     <title>MOHSIN</title>
+    
+    <style>
+        button.submit{
+            display: flex;
+        }
+    </style>
 </head>
 <body>
     <section class="body">
         <div class="logo">MOHSIN</div>
         <div class="form-box">
+            <div class="errormessage"></div>
             <div>
-                <input type="email" name="email" placeholder="Email">
+                <input type="email" class="email" name="email" placeholder="Email">
             </div>
             <div>
-                <input type="text" name="username" placeholder="Username">
+                <input type="text" class="username" name="username" placeholder="Username">
             </div>
             <div>
-                <input type="password" name="password" placeholder="Password">
+                <input type="password" class="password" name="password" placeholder="Password">
             </div>
             
-            <button type="submit" class="submit">CREATE NEW ACCOUNT</button>
+            <button type="submit" class="submit">
+                <div class="lds-ellipsis loader hidden"><div></div><div></div><div></div><div></div></div>
+                <div class="main">CREATE NEW ACCOUNT</div>
+            </button>
         </div>
         <div class="signin">
             <div>Already have an account?</div>
-            <button><a href="/signin">SIGN IN</a></button>
+            <button><a href="/signin/0">SIGN IN</a></button>
         </div>
     </section>
 
     <script src="/js/jquery.min.js"></script>
     <script>
         $(document).ready(function(){
-            var userDetails = {
-                email: $('input.email').val(),
-                username: $('input.username').val(),
-                password: $('input.password').val()
-            };
+            $('button.submit').click(function(){
+                 var userDetails = {
+                    email: $('input.email').val(),
+                    username: $('input.username').val(),
+                    password: $('input.password').val()
+                  };
 
-            if(userDetails.email && userDetails.username && userDetails.password){
-                $.ajax({
-                    type:'POST',
-                    url:'/createaccount',
-                    dataType: 'json',
-                    data: userDetails,
-                    success: (data)=>{
-                    },
-                    error: (data)=>{
-                    }
-                });
-            }
+                if(userDetails.email && userDetails.username && userDetails.password){
+                    $('button.submit > div.main').addClass('hidden');
+                    $('button.submit > div.loader').removeClass('hidden');
+                    
+                    $.ajax({
+                        type:'POST',
+                        url:'/createaccount',
+                        dataType: 'json',
+                        data: userDetails,
+                        success: (data)=>{
+                            if(data.error){
+                                $('div.errormessage').html(`${data.error}`);
+                                
+                                $('button.submit > div.loader').addClass('hidden');
+                                $('button.submit > div.main').removeClass('hidden');
+                            } else {   
+                                window.location.pathname = '/app/workspace';
+                            }
+                        },
+                        error: (data)=>{
+                            $('div.errormessage').html(`${data}`);
+                            
+                            $('button.submit > div.loader').addClass('hidden');
+                            $('button.submit > div.main').removeClass('hidden');
+                        }
+                    });
+                }
+            });
         });
     </script>
 </body>

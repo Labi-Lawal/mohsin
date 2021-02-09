@@ -30,7 +30,7 @@ module.exports = (server)=>{
     });
 
     server.post('/signin', (req, res)=>{
-        User.findOne({$or:[
+        Account.findOne({$or:[
             {email: req.body.userlogin.toLowerCase()},
             {username: req.body.userlogin.toLowerCase()}
         ]}, (err, foundUser)=>{
@@ -82,8 +82,12 @@ module.exports = (server)=>{
 
         newAccount.save((err, savedAccount)=>{
             if(savedAccount) {
-                console.log(`New account created ${savedAccount}`);
-                res.redirect('/');
+                req.session.user = savedAccount;
+                console.log(`New account created ${savedAccount.username}`);
+                res.send({userSession: savedAccount, sessionType: 'user', error: false});
+            }
+            if(err) {
+                res.send({userSession: false, sessionType: false, error: 'There was an error creatin your account. Please try again.'});
             }
         });
     });
