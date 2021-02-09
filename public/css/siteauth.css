@@ -44,7 +44,7 @@ button.submit{
     margin-top: 5%;
     height: 50px;
     border-radius: 5px;
-    background: blue;
+    background: #8800ff;
     color: white;
     font-weight: 700;
     cursor: pointer;
@@ -67,7 +67,7 @@ div.signin button{
     background: none;
     border: none;
     font-weight: 700;
-    color: blue;
+    color: #8800ff;
 }
 .lds-ellipsis {
   position: relative;
