@@ -84,7 +84,7 @@ module.exports = (server)=>{
             if(savedAccount) {
                 req.session.user = savedAccount;
                 console.log(`New account created ${savedAccount.username}`);
-                res.send({userSession: foundUser, sessionType: 'user', error: false});
+                res.send({userSession: savedAccount, sessionType: 'user', error: false});
             }
             if(err) {
                 res.send({userSession: false, sessionType: false, error: 'There was an error creatin your account. Please try again.'});
