@@ -23,7 +23,10 @@
                 <input type="password" class="password" name="password" placeholder="Password">
             </div>
             
-            <button type="submit" class="submit">SIGN IN</button>
+            <button type="submit" class="submit">
+                <div class="lds-ellipsis loader hidden"><div></div><div></div><div></div><div></div></div>
+                <div class="main">SIGN IN</div>
+            </button>
         </div>
         <div class="signin">
             <div>Don't have an account?</div>
@@ -43,7 +46,9 @@
                 console.log(userDetails);
 
                 if(userDetails.userlogin && userDetails.password){
-                    console.log('here');
+                    $('button.submit > div.main').addClass('hidden');
+                    $('button.submit > div.loader').removeClass('hidden');
+                
                     $.ajax({
                         type:'POST',
                         url:'/signin',
@@ -57,8 +62,14 @@
                                 if(data.sessionType == 'admin'){
                                     window.location.pathname = '/admin';
                                 }
+                                
+                                $('button.submit > div.loader').addClass('hidden');
+                                $('button.submit > div.main').removeClass('hidden');
                            } else {
                                $('div.errormessage').html(`${data.error}`);
+                               
+                                $('button.submit > div.loader').addClass('hidden');
+                                $('button.submit > div.main').removeClass('hidden');
                            }
                         },
                         error: (data)=>{
