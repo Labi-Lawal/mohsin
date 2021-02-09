@@ -65,15 +65,16 @@
                         success: (data)=>{
                             if(data.error){
                                 $('div.errormessage').html(`${data.error}`);
-                            } else {
-                                $('button.submit > div.main').removeClass('hidden');
+                                
                                 $('button.submit > div.loader').addClass('hidden');
+                                $('button.submit > div.main').removeClass('hidden');
+                            } else {   
+                                window.location.pathname = '/app/workspace';
                             }
-                            
-                            $('button.submit > div.loader').addClass('hidden');
-                            $('button.submit > div.main').removeClass('hidden');
                         },
                         error: (data)=>{
+                            $('div.errormessage').html(`${data}`);
+                            
                             $('button.submit > div.loader').addClass('hidden');
                             $('button.submit > div.main').removeClass('hidden');
                         }
