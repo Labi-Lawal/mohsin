@@ -30,7 +30,7 @@ module.exports = (server)=>{
     });
 
     server.post('/signin', (req, res)=>{
-        User.findOne({$or:[
+        Account.findOne({$or:[
             {email: req.body.userlogin.toLowerCase()},
             {username: req.body.userlogin.toLowerCase()}
         ]}, (err, foundUser)=>{
