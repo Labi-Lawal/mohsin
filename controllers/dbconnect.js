@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 //connect to mongodb
 
 // mongodb+srv://labi:spectacular1@cluster0.7gmyn.mongodb.net/ mohsin?retryWrites=true&w=majority
-mongoose.connect('mongodb://localhost/mohsin', {
+mongoose.connect('mongodb+srv://labi:spectacular1@cluster0.7gmyn.mongodb.net/mohsin?retryWrites=true&w=majority', {
     useNewUrlParser: true,
     useUnifiedTopology: true
 });
