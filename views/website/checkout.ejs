@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="/fonts/material-icons.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/checkout.css">
+
+    <title>Checkout - Mohsin</title>
+</head>
+<body>
+
+    <section class="body">
+        <div class="pagetitle"><%=package.title%> Package</div>
+        <div class="details">
+
+        </div>
+        <div class="bottom">
+            <% if(package.price == 0) { %>
+                <div class="total"></div>
+                <div class="digit">
+                    Free
+                </div>
+            <% } else { %>
+                <div class="total">Total</div>
+                <div class="digit">
+                    <%=package.price %><%=package.price %>
+                </div>
+            <% } %>
+            <button class="sub">Subscribe</button>
+        </div>
+   </section>
+
+   <script src="/js/jquery.min.js"></script>
+   <script>
+       $(document).ready(()=>{
+
+          $('button.sub').click(()=>{
+              $.ajax({
+                type: 'POST',
+                url: '/checkout',
+                success: function(response){
+                    if(response.error) {
+                        alert('There is an error!!');
+                    } else {
+                        if(response.subscribed) {
+                            window.location.pathname = "/app/newcompany";
+                        } else {
+                            // window.location.pathname = "/"
+                        }
+                    }
+                }
+              });
+          });
+       });
+   </script>
+</body>
+</html>

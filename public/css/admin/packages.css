@@ -1,0 +1,211 @@
+button{
+    outline: none;
+    cursor: pointer;
+}
+div.nav div.packages {
+    color: black;
+}
+section.body div.breadcrumbs {
+    padding: 1% 0%;
+    padding-left: 5%;
+    font-size: 90%;
+    font-weight: 700;
+    color: grey;
+}
+div.grid-list {
+    display: grid;
+    width: 90%;
+    margin: 0% auto;
+    grid-template-columns: 26% 26% 26%;
+    justify-content: center;
+    column-gap: 30px;
+    row-gap: 40px;
+    padding: 2% 1%;
+}
+div.top{
+    display: flex;
+    align-items: center;
+    height: 50px;
+    margin-top: 5%;
+}
+div.top button.create-new-package{
+    margin-left: auto;
+    margin-right: 10%;
+    height: 80%;
+    width: 12%;
+    border-radius: 5px;
+    border-color: #8800ff;
+    background: white;
+    color: #8800ff;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    font-weight: 500;
+}
+div.top button.create-new-package span{
+    border: 1px solid #8800ff;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+div.allpackages {
+    margin-top: 2%;
+}
+div.package {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px 1px rgb(242, 242, 242);
+}
+div.package > div.head{
+    padding: 5% 0%;
+}
+div.package > div.head > div.title {
+    text-align: center;
+    padding: 0% 0% 3%;
+    font-size: 180%;
+    font-weight: 900;
+    color: #8800ff;
+    text-transform: capitalize;
+}
+div.package > div.head > div.subtitle {
+    font-size: 100%;
+    text-align: center;
+    font-weight: 500;
+    color: grey;
+    text-transform: capitalize;
+}
+div.price {
+    text-align: center;
+    padding: 5% 0%;
+    background: #8800ff;
+    color: white;
+    font-size: 110%;
+}
+div.price span.digit {
+    font-size: 350%;
+    font-weight: 900;
+}
+div.list-of-features{
+    margin: 10% 0%;
+}
+div.list-of-features > div{
+    padding: 3% 0%;
+    padding-left: 15%;
+    font-weight: 600;
+}
+div.bottom{
+    border-top: 1px solid rgb(233, 233, 233);
+    padding: 10% 0%;
+    text-align: center;
+}
+div.bottom button{
+    border-radius: 30px;
+    border: none;
+    width: 45%;
+    padding: 2% 0%;
+    font-weight: 900;
+    color: white;
+    background: #8800ff;
+}
+
+div.new-package{
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+div.layer{
+    background: rgb(0, 0, 0, 0.7);
+    width: 100%;
+    height: 100vh;
+    position : fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+div.new-package-box, div.success-box{
+    background: white;
+    width: 35%;
+    border-radius: 10px;
+}
+div.new-package-box div.title{
+    font-weight: 800;
+    text-align: center;
+    font-size: 150%;
+    padding: 4% 0%;
+}
+div.new-package-box div.label{
+    font-size: 90%;
+    font-weight: 600;
+    color: grey;
+}
+div.form-box{
+    width: 80%;
+    margin: 5% auto 0%;
+}
+div.form-box input {
+    width: 96%;
+    padding: 0% 3%;
+    height: 40px;
+    border: 1px solid lightgrey;
+    border-radius: 5px;
+}
+div.form-box > div {
+    width: 100%;
+    margin-bottom: 5%;
+}
+div.form-box > div.two {
+    display: flex;
+    justify-content: space-between;
+}
+div.form-box > div.two > div{
+    width: 45%;
+}
+button.submit{
+    width: 100%;
+    padding: 3% 0%;
+    margin-bottom: 5%;
+    background: #8800ff;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-weight: 700;
+}
+
+.hidden{
+    display: none !important;
+}
+div.success-box{
+    text-align: center;
+}
+div.success-box div.material-icons{
+    margin-top: 5%;
+    font-size: 150px;
+    color: rgba(0, 128, 0, 0.712);
+}
+div.package-created{
+    text-align: center;
+    padding: 5% 0%;
+    font-weight: 800;
+    font-size: 180%;
+    color: grey;
+} 
+
+div.no_packages {
+    width: 100%;
+    height: 50vh;
+    font-size: 200%;
+    font-weight: 700;
+    color: grey;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

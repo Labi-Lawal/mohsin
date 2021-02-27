@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/siteauth.css">
-    
+
     <title>MOHSIN</title>
 </head>
 <body>
@@ -22,7 +22,7 @@
             <div>
                 <input type="password" class="password" name="password" placeholder="Password">
             </div>
-            
+
             <button type="submit" class="submit">
                 <div class="lds-ellipsis loader hidden"><div></div><div></div><div></div><div></div></div>
                 <div class="main">SIGN IN</div>
@@ -30,55 +30,66 @@
         </div>
         <div class="signin">
             <div>Don't have an account?</div>
-            <button><a href="/createaccount/0">CREATE ACCOUNT</a></button>
+            <button>
+                <a href="/createaccount">CREATE ACCOUNT</a>
+            </button>
         </div>
     </section>
 
     <script src="/js/jquery.min.js"></script>
     <script>
         $(document).ready(function(){
-           $('button.submit').click(function(){
+            $('button.submit').click(function(){
                 var userDetails = {
                     userlogin: $('input.userlogin').val(),
                     password: $('input.password').val()
                 };
 
                 console.log(userDetails);
-
                 if(userDetails.userlogin && userDetails.password){
                     $('button.submit > div.main').addClass('hidden');
                     $('button.submit > div.loader').removeClass('hidden');
-                
+
                     $.ajax({
                         type:'POST',
                         url:'/signin',
                         dataType: 'json',
                         data: userDetails,
                         success: (data)=>{
-                           if(!data.error){
-                                if(data.sessionType == 'user'){
-                                    window.location.pathname = '/app/workspace';
-                                }
+                            if(!data.error){
                                 if(data.sessionType == 'admin'){
-                                    window.location.pathname = '/admin';
+                                    window.location.pathname = '/admin/packages';
+                                } else{
+                                    if(!data.toCheckOut) {
+                                        if(data.sessionType == 'customerUser'){
+                                            window.location.pathname = '/';
+                                        }
+                                        if(data.sessionType == 'customerAdmin'){
+                                            window.location.pathname = '/app/dashboard';
+                                        }
+                                    } else {
+                                        window.location.pathname = `/purchase/${data.packageId}`;
+                                    }
                                 }
-                                
+
                                 $('button.submit > div.loader').addClass('hidden');
                                 $('button.submit > div.main').removeClass('hidden');
                            } else {
                                $('div.errormessage').html(`${data.error}`);
-                               
+
                                 $('button.submit > div.loader').addClass('hidden');
                                 $('button.submit > div.main').removeClass('hidden');
-                           }
+                            }
                         },
                         error: (data)=>{
                             console.log(data);
                         }
                     });
                 }
-           });
+            });
         });
     </script>
 </body>
 </html>
+
+

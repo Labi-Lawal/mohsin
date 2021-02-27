@@ -1,5 +1,5 @@
 div.nav div.workspace{
-    color: black;
+    color: white;
 }
 section.body{
     padding: 2% 0%;
@@ -9,7 +9,6 @@ div.page-title{
     font-weight: 600;
 }
 div.breadcrumbs{
-    font-size: 80%;
     margin-left: 5%;
     color: grey;
 }
@@ -26,6 +25,7 @@ div.grid-list{
 /**************** FOLDERS STYLE BEGINS *****************/
 
 div.grid-list div.new-folder{
+    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -86,6 +86,74 @@ div.options::selection{
     background: none;
 }
 
+div.create-file-box {
+    width: 30%;
+    height: 75vh;
+    background: white;
+    border-radius: 5px;
+}
+div.create-file-box div.nav{
+    display: flex;
+    justify-content: space-around;
+}
+div.create-file-box div.nav > div{
+    width: 30%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    color: grey;
+    cursor: pointer;
+}
+div.create-file-box div.nav > div.current{
+    color: rgba(202, 44, 76, 0.808);
+    border-bottom: 2px solid rgba(202, 44, 76, 0.808);
+}
+div.note-form-box{
+    width: 90%;
+    margin: 0% auto;
+    height: 80%;
+}
+div.note-form-box div.field, div.file-form-box div.field{
+    width: 90%;
+    margin: 5% auto 0%;
+}
+div.field-two {
+    width: 90%;
+    margin: 5% auto 0%;
+    display: flex;
+    justify-content: space-between;
+}
+div.field-two > div.field{
+    width: 50%;
+}
+div.field-two input{
+    height: 30px;
+}
+div.field div.label {
+    font-weight: 600;
+    margin-bottom: 1%;
+    color: grey;
+}
+div.field input{
+    font-size: 110%;
+    padding: 2%;
+}
+div.field textarea{
+    min-width: 95%;
+    max-width: 95%;
+    min-height: 330px;
+    max-height: 330px;
+    padding: 2%;
+    font-size: 110%;
+    border-color: lightgrey;
+    outline-color: #5480d6;
+    border-radius: 5px;
+}
+div.field input.file {
+
+}
 /*******************************************/
 
 
@@ -198,7 +266,115 @@ div.file > div.info div.file-size{
     font-weight: 700;
     font-size: 70%;
 }
+div.emptyworkspace{
+    width: 100%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    height: 50vh;
+}
+div.emptyworkspace > div{
+    text-align: center;
+}
+div.emptyworkspace div.text{
+    font-size: 200%;
+    font-weight: 800;
+    color: grey;
+}
+div.emptyworkspace button{
+    width: 200px;
+    display: flex;
+    align-items: center;
+    margin: 10% auto 0%;
+    height: 50px;
+    border: 1px solid #5480d6;
+    background: #5480d6;
+    border-radius: 3px;
+    font-size: 100%;
+    font-weight: 600;
+    outline: none;
+    cursor: pointer;
+}
+div.emptyworkspace button div.material-icons{
+   width: 30px;
+   height: 30px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   border-radius: 50%;
+   background: white;
+   color: #5480d6;
+   margin-right: 10%;
+   margin-left: 10%;
+}
 
-
+section.create-folder-frame{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+}
+section.create-folder-frame div.layer{
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    background: rgb(0, 0, 0, 0.8);
+}
+section.create-folder-frame div.form-box{
+    width: 20%;
+    background: white;
+    border-radius: 10px;
+    padding: 2%;
+}
+div.form-box > div.form  form > div{
+    margin-bottom: 4%;
+}
+div.form-box div.label{
+    font-weight: 600;
+}
+input{
+    width: 94%;
+    padding: 3%;
+    border-radius: 5px;
+    border: 1px solid lightgrey;
+    outline-color: #5480d6;
+}
+button.create{
+    background: #5480d6;
+    color: white;
+    border: none;
+    height: 40px;
+    width: 100%;
+    border-radius: 5px;
+    font-weight: 600;
+    cursor: pointer;
+    outline: none;
+}
+div.errormessage{
+    color: crimson;
+    font-size: 90%;
+    height: 20px;
+    text-align: center;
+    padding: 0% 2%;
+}
+button.submit-file{
+    width: 90%;
+    margin: 0% auto;
+    display: block;
+    margin-top: 5%;
+    height: 50px;
+    color: white;
+    background: #5480d6;
+    border: 1px solid #5480d6;
+    font-size: 110%;
+    font-weight: 600;
+    outline: none;
+}
 
 /*****************************************/
+

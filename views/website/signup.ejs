@@ -8,9 +8,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/siteauth.css">
-    
+
     <title>MOHSIN</title>
-    
+
     <style>
         button.submit{
             display: flex;
@@ -31,7 +31,7 @@
             <div>
                 <input type="password" class="password" name="password" placeholder="Password">
             </div>
-            
+
             <button type="submit" class="submit">
                 <div class="lds-ellipsis loader hidden"><div></div><div></div><div></div><div></div></div>
                 <div class="main">CREATE NEW ACCOUNT</div>
@@ -39,7 +39,7 @@
         </div>
         <div class="signin">
             <div>Already have an account?</div>
-            <button><a href="/signin/0">SIGN IN</a></button>
+            <button><a href="/signin">SIGN IN</a></button>
         </div>
     </section>
 
@@ -56,7 +56,7 @@
                 if(userDetails.email && userDetails.username && userDetails.password){
                     $('button.submit > div.main').addClass('hidden');
                     $('button.submit > div.loader').removeClass('hidden');
-                    
+
                     $.ajax({
                         type:'POST',
                         url:'/createaccount',
@@ -65,16 +65,25 @@
                         success: (data)=>{
                             if(data.error){
                                 $('div.errormessage').html(`${data.error}`);
-                                
+
                                 $('button.submit > div.loader').addClass('hidden');
                                 $('button.submit > div.main').removeClass('hidden');
-                            } else {   
-                                window.location.pathname = '/app/workspace';
+                            } else {
+                                if(!data.toCheckOut) {
+                                    if(data.sessionType == 'customerUser'){
+                                        window.location.pathname = '/';
+                                    }
+                                    if(data.sessionType == 'customerAdmin'){
+                                        window.location.pathname = '/app/dashboard';
+                                    }
+                                } else {
+                                    window.location.pathname = `/purchase/${data.packageId}`;
+                                }
                             }
                         },
                         error: (data)=>{
                             $('div.errormessage').html(`${data}`);
-                            
+
                             $('button.submit > div.loader').addClass('hidden');
                             $('button.submit > div.main').removeClass('hidden');
                         }

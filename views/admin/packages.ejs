@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="/css/admin/packages.css">
+    <link rel="stylesheet" href="/fonts/material-icons.css">
+
+    <title>Customer Service Response Template</title>
+</head>
+<body>
+
+    <%- include('../admin/includes/header.ejs') %>
+
+    <div class="new-package hidden">
+        <div class="layer"></div>
+        <div class="new-package-box">
+            <div class="title">Create A New Package</div>
+            <form onsubmit="return false;">
+                <div class="form-box">
+                    <div class="one">
+                        <div class="label">Package Title</div>
+                        <input type="text" class="title">
+                    </div>
+                    <div class="two">
+                        <div class="one">
+                            <div class="label">Price</div>
+                            <input type="text" class="price">
+                        </div>
+                        <div class="one">
+                            <div class="label">Duration (Days)</div>
+                            <input type="text" class="durInDays">
+                        </div>
+                    </div>
+                    <div class="two">
+                        <div class="one">
+                            <div class="label">Company Limit</div>
+                            <input type="text" class="companyLimit">
+                        </div>
+                        <div class="one">
+                            <div class="label">Duration (Days)</div>
+                            <input type="text">
+                        </div>
+                    </div>
+                    <button class="submit">Create Package</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="success-box hidden">
+            <div class="material-icons">check_circle</div>
+            <div class="package-created">Package Successfully Created</div>
+        </div>
+    </div>
+
+    <section class="body">
+       <div class="top">
+            <div class="breadcrumbs">
+                workspace > packages
+            </div>
+            <button class="create-new-package">
+                <span class="material-icons">add</span>
+                Create New Package
+            </button>
+       </div>
+
+       <% if(allPackages.length > 0) { %>
+            <div class="grid-list allpackages">
+                <% for(var i = 0; i < allPackages.length; i++) { %>
+                    <div class="package">
+                        <div class="head">
+                            <div class="title"><%=allPackages[i].title%></div>
+                        </div>
+                        <div class="price">
+                            £ <span class="digit"><%=allPackages[i].price%></span> p/mo
+                        </div>
+                        <div class="list-of-features">
+                       
+                        </div>
+                        <div class="bottom">
+                            <button>SIGN UP NOW</button>
+                        </div>
+                    </div>
+                <% } %>
+            </div>
+        <% } else { %>
+        
+            <div class="no_packages">
+                There are no packages yet.
+            </div>
+            
+        <% } %>
+    </section>
+
+
+   <script src="/js/jquery.min.js"></script>
+   <script>
+       $(document).ready(function(){
+            $('button.create-new-package').click(function(){
+                $('div.new-package').removeClass('hidden');
+            });
+
+            $('div.new-package div.layer').click(function(){
+                $('div.new-package').addClass('hidden');
+            });
+
+            $('button.submit').click(function(){
+                var packageDetails = {
+                    title: $('input.title').val(),
+                    price: $('input.price').val(),
+                    durInDays: $('input.durInDays').val(),
+                    companyLimit: $('input.companyLimit').val()
+                };
+
+
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/admin/createpackage',
+                    dataType: 'json',
+                    data: packageDetails,
+                    success: function(data){
+                        if(data.packageCreated) {
+                            $('div.new-package-box').addClass('hidden');
+                            $('div.success-box').removeClass('hidden');
+                        }
+                        if(data.error) {
+                            $('div.new-package-box div.errormessage').html('Package wasn\'t created, try again.');
+                        }
+                    },
+                    error: function(data){
+                        console.log(data);
+                        $('div.new-package-box div.errormessage').html('Package wasn\'t created, try again.');
+                    }
+                });
+            });
+       });
+   </script>
+</body>
+</html>
+
+

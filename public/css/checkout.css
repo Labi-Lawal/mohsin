@@ -1,0 +1,46 @@
+*{
+    margin: 0px;
+    font-family: 'rubik';
+}
+section.body{
+    width: 50%;
+    margin: 0% auto 0%;
+}
+div.pagetitle{
+    font-weight: 600;
+    font-size: 250%;
+    color: rgb(129, 103, 230);
+    height: 100px;
+    display: flex;
+    align-items: center;
+}
+
+div.bottom{
+    position: absolute;
+    width: 40%;
+    bottom: 0;
+    height: 100px;
+    border-top: 1px solid rgb(237, 237, 237);
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+}
+div.bottom div.digit{
+    margin-left: 2%;
+    font-size: 120%;
+}
+button.sub{
+    margin-left: auto;
+    width: 30%;
+    height: 50%;
+    background: #8800ff;
+    border: 1px solid #8800ff;
+    border-radius: 5px;
+    color: white;
+    font-weight: 700;
+    font-size: 110%;
+    outline: none;
+    cursor: pointer;
+}
+
+

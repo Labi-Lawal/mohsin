@@ -1,17 +1,68 @@
 <link rel="stylesheet" href="/fonts/material-icons.css">
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/animate.min.css">
 <link rel="stylesheet" href="/css/header.css">
 
-<header>
-    <div class="logo">MOH<span>SIN</span></div>
-    <div class="nav">
-        <div class="workspace"><a href="/workspace">Workspace</a></div>
-        <div class="users"><a href="/users">Users</a></div>
-        <div class="companies">Companies</div>
-    </div>
-    <div class="userprofile">
-        <div class="username"> Admin </div>
-        <img src="/images/user.png" alt="">
-    </div>
-</header>
+<% if(sessionCompany != undefined) { %>
+    <header>
+        <div class="logo">
+            <% if(sessionCompany.logo != undefined) { %>
+                <img src="/images/companylogos/<%=sessionCompany.logo%>">
+            <% } else { %>
+                <%=sessionCompany.name %>
+            <% } %>
+        </div>
+
+        <div class="nav">
+            <div class="dashboard"><a href="/app/dashboard">Dashboard</a></div>
+            <div class="workspace"><a href="/app/workspace">Workspace</a></div>
+            <div class="users"><a href="/app/users">Users</a></div>
+        </div>
+
+        <div class="companies collapsed">
+            <div class="click">Companies</div>
+            <div class="material-icons indicator">keyboard_arrow_down</div>
+
+            <div class="companies-list hidden">
+              <% for(var i = 0; i < sessionUser.companies.length; i++) { %>
+                <div>
+                    <a href="/app/changecompany/:<%=sessionUser.companies[i].companyId%>">
+                        <img src="/images/companylogos/<%=sessionUser.companies[i].logo%>">
+                        <div class="name"><%=sessionUser.companies[i].name%></div>
+                    </a>
+                </div>
+              <% } %>
+              <div class="newproject">
+                    <a href="/app/newcompany"><div>Create New Company</div></a>
+              </div>
+            </div>
+        </div>
+
+        <div class="userprofile">
+            <img src="/images/user.png" alt="">
+            <div class="username"> <%=sessionUser.username %> </div>
+        </div>
+    </header>
+<% } %>
+
+<script src="/js/jquery.min.js"></script>
+<script>
+    $(document).ready(()=>{
+        $('div.companies div.click').click(()=>{
+            if($('div.companies').hasClass('collapsed')) {
+                $('div.companies div.material-icons.indicator').html('keyboard_arrow_up');
+                $('div.companies').removeClass('collapsed');
+                $('div.companies').addClass('expanded');
+
+                $('div.companies div.companies-list').removeClass('hidden');
+            } else {
+                $('div.companies').addClass('collapsed');
+                $('div.companies').removeClass('expanded');
+                $('div.companies div.material-icons.indicator').html('keyboard_arrow_down');
+
+                $('div.companies div.companies-list').addClass('hidden');
+            }
+        });
+    });
+</script>

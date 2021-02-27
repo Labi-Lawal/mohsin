@@ -11,195 +11,251 @@
 </head>
 <body>
 
-    <%- include('../app/includes/header.ejs') %>
+    <%- include('./includes/header.ejs') %>
 
-   <section class="body">
-        <div class="breadcrumbs">Workspace > FolderName </div>
+    <section class="body">
+        <div class="breadcrumbs"> Workspace > <%=folder.title %> </div>
         <div class="main-frame">
-            <div class="notes grid-list">
-                <div class="new-folder folder">
-                    <div class="material-icons">add</div>
-                </div>
- 
-                <div class="file">
-                    <div class="date-created">
-                        <div class="material-icons">event_note</div>
-                        <div class="date">06-02-2021</div>
-                        <div class="options material-icons">
-                            more_horiz
-                        </div>
+            <% if(folder.files.length > 0){ %>
+                <div class="notes grid-list">
+                    <div class="new-folder folder">
+                        <div class="material-icons">add</div>
                     </div>
 
-                    <div class="info">
-                        <img src="/images/doc.png" alt="">
-                        <div class="content">
-                            <div class="title">Sign In To Control Your Subs SubsSubs</div>
-                        </div>
-                        <div class="file-size">
-                            225 kb
-                        </div>
-                    </div>
-                </div>
+                    <% for(var i = 0; i < folder.files.length; i++) { %>
+                        <% if(folder.files[i].type == 'doc-word'){ %>
+                            <div class="file">
+                                <div class="date-created">
+                                    <div class="material-icons">event_note</div>
+                                    <div class="date">06-02-2021</div>
+                                    <div class="options material-icons">
+                                        more_horiz
+                                    </div>
+                                </div>
 
-                <div class="note">
-                    <div class="date-created">
-                        <div class="material-icons">event_note</div>
-                        <div class="date">06-02-2021</div>
-                        <div class="options material-icons">
-                            more_horiz
-                        </div>
-                    </div>
-
-                    <div class="info">
-                        <div class="material-icons">description</div>
-                        <div class="content">
-                            <div class="title">1. Sign In To Control Your Subs SubsSubs</div>
-                            <div class="excerpt">
-                                Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a.
-                                Curabitur aliquet quam id dui posuere blandit. Nulla quis lorem ut libero malesuada feugiat. Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui.
+                                <div class="info">
+                                    <img src="/images/doc.png" alt="">
+                                    <div class="content">
+                                        <div class="title">Sign In To Control Your Subs SubsSubs</div>
+                                    </div>
+                                    <div class="file-size">
+                                        225 kb
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
+                        <% } else if(folder.files[i].type == 'doc-pdf') { %>
+                            <div class="file">
+                                <div class="date-created">
+                                    <div class="material-icons">event_note</div>
+                                    <div class="date">06-02-2021</div>
+                                    <div class="options material-icons">
+                                        more_horiz
+                                    </div>
+                                </div>
 
-                <div class="note">
-                    <div class="date-created">
-                        <div class="material-icons">event_note</div>
-                        <div class="date">06-02-2021</div>
-                        <div class="options material-icons">
-                            more_horiz
-                        </div>
-                    </div>
-
-                    <div class="info">
-                        <div class="material-icons">description</div>
-                        <div class="content">
-                            <div class="title">2. Sign In To Control Your Subs SubsSubs</div>
-                            <div class="excerpt">
-                                Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a.
-                                Curabitur aliquet quam id dui posuere blandit. Nulla quis lorem ut libero malesuada feugiat. Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui.
+                                <div class="info">
+                                    <img src="/images/pdf.png" alt="">
+                                    <div class="content">
+                                        <div class="title">Sign In To Control Your Subs SubsSubs</div>
+                                    </div>
+                                    <div class="file-size">
+                                        225 kb
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-               
-                <div class="note">
-                    <div class="date-created">
-                        <div class="material-icons">event_note</div>
-                        <div class="date">06-02-2021</div>
-                        <div class="options material-icons">
-                            more_horiz
-                        </div>
-                    </div>
+                        <% } else { %>
+                            <div class="note" onclick="displayReader('<%=i %>')">
+                                <div class="date-created">
+                                    <div class="material-icons">event_note</div>
+                                    <div class="date">06-02-2021</div>
+                                    <div class="options material-icons">more_horiz</div>
+                                </div>
 
-                    <div class="info">
-                        <div class="material-icons">description</div>
-                        <div class="content">
-                            <div class="title">3. Sign In To Control Your Subs SubsSubs</div>
-                            <div class="excerpt">
-                                Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a.
-                                Curabitur aliquet quam id dui posuere blandit. Nulla quis lorem ut libero malesuada feugiat. Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui.
+                                <div class="info">
+                                    <div class="material-icons">description</div>
+                                    <div class="content">
+                                        <div class="title"><%=folder.files[i].title %></div>
+                                        <div class="excerpt">
+                                            <%=folder.files[i].content %>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
+                        <% }%>
+                    <% } %>
+                </div>
+            <% } else { %>
+                <div class="emptyworkspace">
+                    <div>
+                        <div class="text">Folder is empty.</div>
+                        <button onclick="newFolder()">
+                            <div class="material-icons">add</div>
+                            <div>New File</div>
+                        </button>
                     </div>
                 </div>
-               
-                <div class="note">
-                    <div class="date-created">
-                        <div class="material-icons">event_note</div>
-                        <div class="date">06-02-2021</div>
-                        <div class="options material-icons">
-                            more_horiz
-                        </div>
-                    </div>
+            <% } %>
 
-                    <div class="info">
-                        <div class="material-icons">description</div>
-                        <div class="content">
-                            <div class="title">4. Sign In To Control Your Subs SubsSubs</div>
-                            <div class="excerpt">
-                                Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a.
-                                Curabitur aliquet quam id dui posuere blandit. Nulla quis lorem ut libero malesuada feugiat. Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui.
-                            </div>
-                        </div>
-                    </div>
-                </div>
-             
-                <div class="note">
-                    <div class="date-created">
-                        <div class="material-icons">event_note</div>
-                        <div class="date">06-02-2021</div>
-                        <div class="options material-icons">
-                            more_horiz
-                        </div>
-                    </div>
-
-                    <div class="info">
-                        <div class="material-icons">description</div>
-                        <div class="content">
-                            <div class="title">5. Sign In To Control Your Subs SubsSubs</div>
-                            <div class="excerpt">
-                                Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a.
-                                Curabitur aliquet quam id dui posuere blandit. Nulla quis lorem ut libero malesuada feugiat. Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui.
-                            </div>
-                        </div>
-                    </div>
-                </div>
-               
-                <div class="file">
-                    <div class="date-created">
-                        <div class="material-icons">event_note</div>
-                        <div class="date">06-02-2021</div>
-                        <div class="options material-icons">
-                            more_horiz
-                        </div>
-                    </div>
-
-                    <div class="info">
-                        <img src="/images/pdf.png" alt="">
-                        <div class="content">
-                            <div class="title">Sign In To Control Your Subs SubsSubs</div>
-                        </div>
-                        <div class="file-size">
-                            225 kb
-                        </div>
-                    </div>
-                </div>
-            </div>
-        
-         <%- include('../app/includes/reader.ejs') %>
+            <%- include('./includes/reader.ejs') %>
         </div>
+    </section>
 
-   </section>
+    <section class="create-folder-frame hidden">
+        <div class="layer"></div>
+        <div class="create-file-box">
+            <div class="nav">
+                <div class="note-tab current" onclick="switchTabs('note-tab', 'note-form-box');">Note</div>
+                <div class="file-tab" onclick="switchTabs('file-tab', 'file-form-box');">File</div>
+            </div>
+            <div class="errormessage"></div>
+            <form action="/app/createnote" method="POST" onsubmit="return false;">
+                <div class="note-form-box form_box">
+                    <div class="field">
+                        <div class="label">Title</div>
+                        <input type="text" class="title" name="title" required>
+                    </div>
+                    <div class="field">
+                        <div class="label">Content</div>
+                        <textarea class="content"></textarea>
+                    </div>
+                    <button type="submit" class="submit-file" onclick="createNote()">Create Note</button>
+                </div>
+            </form>
+            <div class="file-form-box form_box hidden">
+                <form action="/app/createfile" method="POST">
+                    <div class="field">
+                        <div class="label">Title</div>
+                        <input type="text" class="title" name="title" required>
+                    </div>
+                    <div class="field">
+                        <div class="label">Select A File</div>
+                        <input type="file" name="companylogo" accept=".txt, .doc, .pdf" id="companylogo" class="file" required>
+                    </div>
+                    <div class="field-two">
+                        <div class="field">
+                            <div class="label">File Type</div>
+                            <input type="text" class="filetype" name="fileType" required readonly>
+                        </div>
+                        <div class="field">
+                            <div class="label">File Size</div>
+                            <input type="text" class="filesize" name="fileSize" required readonly>
+                        </div>
+                    </div>
+                    <button type="submit" class="submit-file">Create New File</button>
+                </form>
+            </div>
+        </div>
+    </section>
 
+    <script src="/js/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('section.create-folder-frame button.create').click(function(){
+                var folderDetails = {
+                    title : $('input.title').val(),
+                };
 
-   <script src="/js/jquery.min.js"></script>
-   <script>
-       $(document).ready(function(){
-            document.querySelectorAll('div.note').forEach(element => {
-                element.addEventListener("click", ()=>{
-                    displayReader();
-
-                })
+                if(folderDetails.title){
+                    $.ajax({
+                        type: 'POST',
+                        url: '/createfolder',
+                        dataType: 'json',
+                        data: folderDetails,
+                        success: function(response){
+                                if(response.folderAdded){
+                                    window.location.pathname = "/app/workspace";
+                                } else if (response.errorOccurred) {
+                                    $('div.errormessage').html('There was an error creating a new folder.');
+                                }
+                        },
+                        error: function(data){}
+                    });
+                }
             });
-       });
 
-       function displayReader() {
+            $('div.layer').click(function(){
+                $('section.create-folder-frame').addClass('hidden');
+            });
+        });
+
+        function switchTabs(currentTab, formBox){
+            $('div.create-file-box > div.nav > div').removeClass('current');
+            if($(`div.create-file-box > div.nav > div.${currentTab}`).addClass('current')){
+                $('div.create-file-box div.form_box').addClass('hidden');
+                $(`div.${formBox}`).removeClass('hidden');
+            }
+        }
+
+        function newFolder(){
+            $('section.create-folder-frame').removeClass('hidden');
+        };
+
+        function displayReader(position) {
             $('div.reader-frame').removeClass('hidden');
+
             $('div.reader-frame div.reader-box').removeClass('animate__slideOutRight');
             $('div.reader-frame div.reader-box').addClass('animate__slideInRight');
-       }
+        }
 
-       function hideReader() {       
+        function hideReader() {
             $('div.reader-frame div.reader-box').removeClass('animate__slideInRight');
             if($('div.reader-frame div.reader-box').addClass('animate__slideOutRight')){
                 setTimeout(()=>{
                     $('div.reader-frame').addClass('hidden');
                 }, 400);
             }
+        }
 
-       }
-   </script>
+        var newProfilePicture;
+        var ext;
+        var size;
+
+        $('input#companylogo').change(function(){
+            if(this.files && this.files[0]){
+                var reader = new FileReader();
+                reader.onload = function(e){
+                    size = Math.round(((e.total + Number.EPSILON) * 100) / 1024) / 100 + "KB";
+                    if(e.target.result.includes('application/pdf')) {
+                        ext = "PDF"
+                    }
+                    if(e.target.result.includes('application/msword')) {
+                        ext = "DOC"
+                    }
+                    if(e.target.result.includes('text/')){
+                        ext = "TXT"
+                    }
+
+                    $('input.filesize').val(size);
+                    $('input.filetype').val(ext);
+                }
+                reader.readAsDataURL(this.files[0]);
+                newProfilePicture = this.files[0];
+            }
+        });
+
+        function createNote() {
+            var noteDetails = {
+                title: $('div.note-form-box input.title').val(),
+                content: $('div.note-form-box textarea.content').val()
+            };
+
+            $.ajax({
+                type: 'POST',
+                url: '/app/createnote/:<%=folder._id%>',
+                data: noteDetails,
+                success: (response) => {
+                    if(response.fileCreated){
+                        window.location.pathname = "/app/workspace/:<%=folder.title %>";
+                    }
+                    if(response.errorOccurred) {
+                        $('div.create-file-box div.errormessage').html('There was an error creating ');
+                    }
+                }
+            });
+        }
+
+    </script>
+
 </body>
 </html>
 

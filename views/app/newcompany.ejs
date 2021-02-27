@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="/css/app/admin/newcompany.css">
+
+    <title>New Company - Mohsin</title>
+</head>
+<body>
+
+    <%-include ('./includes/header')%>
+
+    <section class="body animated">
+        <div class="form">
+            <div class="page-title">New Company</div>
+
+            <form action="/app/newcompany" method="POST" enctype="multipart/form-data">
+                <div class="errormessage">
+                    <% if(errorOccurred == true) { %>
+                        There was an error creating your company, please try again.<br>
+                        Subscribe to a greater package to get create more companies for your account.
+                    <% } else if(limitReached) { %>
+                        You can't create anymore company on this plan.
+                    <% } %>
+                </div>
+                <div class="field">
+                    <div class="label">Logo</div>
+                    <div class="companylogo">
+                        <label for="companylogo" class="companylogo">
+                            <img src="/images/userpicture.png" class="companylogo">
+                        </label>
+                    </div>
+                    <input type="file" name="companylogo" accept="image/*" id="companylogo" class="image" required>
+                </div>
+
+                <div class="field">
+                    <div class="label">Name</div>
+                    <input type="text" name="companyname" required>
+                </div>
+
+                <button type="submit">Create Company</button>
+            </form>
+        </div>
+    </section>
+
+    <script src="/js/jquery.min.js"></script>
+    <script>
+        var newProfilePicture;
+
+        $('input#companylogo').change(function(){
+            if(this.files && this.files[0]){
+                var reader = new FileReader();
+                reader.onload = function(e){
+                    $('.companylogo').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(this.files[0]);
+                newProfilePicture = this.files[0];
+            }
+        });
+    </script>
+</body>
+</html>
+

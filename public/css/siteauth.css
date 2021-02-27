@@ -27,6 +27,10 @@ div.form-box{
 div.form-box > div{
     margin-top: 5%;
 }
+div.errormessage{
+  color: crimson;
+  font-size: 90%;
+}
 div.form-box div.label{
     text-align: start;
     font-weight: 500;
@@ -123,6 +127,6 @@ div.signin button{
   }
 }
 .hidden{
-    display: none !important;  
+    display: none !important;
 }
 

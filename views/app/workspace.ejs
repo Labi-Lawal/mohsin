@@ -11,195 +11,104 @@
 </head>
 <body>
 
-    <%- include('../app/includes/header.ejs') %>
+    <%- include('./includes/header.ejs') %>
 
    <section class="body">
 
         <div class="main-frame">
-            <div class="notes grid-list">
-                <div class="new-folder folder">
-                    <div class="material-icons">add</div>
+            <% if(folders.length > 0) { %>
+                <div class="notes grid-list">
+                    <div class="new-folder folder" onclick="newFolder()">
+                        <div class="material-icons">add</div>
+                    </div>
+
+                    <% folders.forEach(folder => { %>
+                        <a href="/app/workspace/:<%=folder._id%>">
+                            <div class="folder">
+                                <div class="top">
+                                    <div class="material-icons">folder</div>
+                                    <div class="no-of-files">
+                                        <%=folder.files.length%>
+                                    </div>
+                                </div>
+                                <div class="title">
+                                    <%=folder.title %>
+                                </div>
+                            </div>
+                        </a>
+                    <% }); %>
                 </div>
-
-                <a href="/app/workspace/folder">
-                    <div class="folder">
-                        <div class="top">
-                            <div class="material-icons">folder</div>
-                            <div class="no-of-files">
-                                50
-                            </div>
-                        </div>
-                        <div class="title">
-                            B2B Customers
-                        </div>
+            <% } else { %>
+                <div class="emptyworkspace">
+                    <div>
+                        <div class="text">You have an empty workspace.</div>
+                        <button onclick="newFolder()">
+                            <div class="material-icons">add</div>
+                            <div>New Folder</div>
+                        </button>
                     </div>
-                </a>
-
-                <a href="/app/workspace/folder">
-                    <div class="folder">
-                        <div class="top">
-                            <div class="material-icons">folder</div>
-                            <div class="no-of-files">
-                                5
-                            </div>
-                        </div>
-                        <div class="title">
-                            Delivery Issues With B2B Customers
-                        </div>
-                    </div>
-                </a>
-
-                <a href="/app/workspace/folder">
-                    <div class="folder">
-                        <div class="top">
-                            <div class="material-icons">folder</div>
-                            <div class="no-of-files">
-                                5
-                            </div>
-                        </div>
-                        <div class="title">
-                            Intro And Outro
-                        </div>
-                    </div>
-                </a>
-
-                <a href="/app/workspace/folder">
-                    <div class="folder">
-                        <div class="top">
-                            <div class="material-icons">folder</div>
-                            <div class="no-of-files">
-                                5
-                            </div>
-                        </div>
-                        <div class="title">
-                            Product Issues
-                        </div>
-                    </div>
-                </a>
-
-                <a href="/app/workspace/folder">
-                    <div class="folder">
-                        <div class="top">
-                            <div class="material-icons">folder</div>
-                            <div class="no-of-files">
-                                5
-                            </div>
-                        </div>
-                        <div class="title">
-                            Recycling
-                        </div>
-                    </div>
-                </a>
-                
-                <a href="/app/workspace/folder">
-                    <div class="folder">
-                        <div class="top">
-                            <div class="material-icons">folder</div>
-                            <div class="no-of-files">
-                                5
-                            </div>
-                        </div>
-                        <div class="title">
-                            Subscription
-                        </div>
-                    </div>
-                </a>
-                
-                <a href="/app/workspace/folder">
-                    <div class="folder">
-                        <div class="top">
-                            <div class="material-icons">folder</div>
-                            <div class="no-of-files">
-                                5
-                            </div>
-                        </div>
-                        <div class="title">
-                            Website Problems
-                        </div>
-                    </div>
-                </a>
-            </div>
+                </div>
+            <% } %>
         </div>
-        
-        <div class="reader-frame">
+
+        <section class="create-folder-frame hidden">
             <div class="layer"></div>
-            <div class="reader-box"></div>
-        </div>
+            <div class="form-box">
+                <div class="form">
+                    <div class="errormessage"></div>
+                    <form onsubmit="return false;">
+                        <div>
+                            <div class="label">Title</div>
+                            <input type="text" name="title" class="title" required>
+                        </div>
+
+                        <button class="create">Create Folder</button>
+                    </form>
+                </div>
+            </div>
+        </section>
    </section>
 
 
    <script src="/js/jquery.min.js"></script>
    <script src="/js/reader.js"></script>
+   <script>
+       $(document).ready(function(){
+
+           $('section.create-folder-frame button.create').click(function(){
+               var folderDetails = {
+                   title : $('input.title').val(),
+               };
+
+               if(folderDetails.title){
+                   $.ajax({
+                       type: 'POST',
+                       url: '/createfolder',
+                       dataType: 'json',
+                       data: folderDetails,
+                       success: function(response){
+                            if(response.folderAdded){
+                                window.location.pathname = "/app/workspace";
+                            } else if (response.errorOccurred) {
+                                $('div.errormessage').html('There was an error creating a new folder.');
+                            }
+                       },
+                       error: function(data){}
+                   });
+               }
+           });
+
+           $('div.layer').click(function(){
+               $('section.create-folder-frame').addClass('hidden');
+           });
+       });
+
+        function newFolder(){
+            $('section.create-folder-frame').removeClass('hidden');
+        };
+
+
+   </script>
 </body>
 </html>
 
-
-<!-- <div class="note">
-    <div class="date-created">
-        <div class="material-icons">event_note</div>
-        <div class="date">06-02-2021</div>
-        <div class="options material-icons">
-            more_horiz
-        </div>
-    </div>
-</div>
-
-<div class="note">
-    <div class="date-created">
-        <div class="material-icons">event_note</div>
-        <div class="date">06-02-2021</div>
-        <div class="options material-icons">
-            more_horiz
-        </div>
-    </div>
-</div>
-
-<div class="note">
-    <div class="date-created">
-        <div class="material-icons">event_note</div>
-        <div class="date">06-02-2021</div>
-        <div class="options material-icons">
-            more_horiz
-        </div>
-    </div>
-</div>
-<div class="note">
-    <div class="date-created">
-        <div class="material-icons">event_note</div>
-        <div class="date">06-02-2021</div>
-        <div class="options material-icons">
-            more_horiz
-        </div>
-    </div>
-</div>
-<div class="note">
-    <div class="date-created">
-        <div class="material-icons">event_note</div>
-        <div class="date">06-02-2021</div>
-        <div class="options material-icons">
-            more_horiz
-        </div>
-    </div>
-</div>
-<div class="note">
-    <div class="date-created">
-        <div class="material-icons">event_note</div>
-        <div class="date">06-02-2021</div>
-        <div class="options material-icons">
-            more_horiz
-        </div>
-    </div>
-</div>
-<div class="note">
-    <div class="date-created">
-        <div class="material-icons">event_note</div>
-        <div class="date">06-02-2021</div>
-        <div class="options material-icons">
-            more_horiz
-        </div>
-    </div>
-    <div class="info">
-        <div class="title"></div>
-        <div class="except"></div>
-    </div>
-</div> -->
