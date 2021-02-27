@@ -49,7 +49,6 @@ module.exports = (server)=>{
     });
 
     server.post('/signin', (req, res)=>{
-        console.log('siggggn ' + req.session.package);
 
         // Admin
         Account.findOne({$or:[
@@ -62,9 +61,8 @@ module.exports = (server)=>{
             }
             if(foundUser){
                 if(foundUser.password == req.body.password){
-
                     req.session.user = foundUser;
-                    console.log(`User has logged in ${req.session.user}`);
+
                     if(req.session.package != undefined) {
                         res.send({userSession: foundUser, sessionType: foundUser.accountType, toCheckOut: true, packageId: req.session.package, error: false});
                     } else {
@@ -75,7 +73,7 @@ module.exports = (server)=>{
                 }
             }
             if(!foundUser){
-                console.log(req.body);
+
                 Admin.findOne({$or:[
                     {email: req.body.userlogin.toLowerCase()},
                     {username: req.body.userlogin.toLowerCase()}
@@ -205,22 +203,7 @@ module.exports = (server)=>{
 
     server.get('/app/workspace/', async  (req, res)  => {
         if(req.session.user != undefined) {
-            var allFolders = [];
-            console.log("Checking the company" + req.session.company);
-
-            for(var i = 0; i < req.session.company.folders.length; i++) {
-                Folder.findOne({_id: req.session.company.folders[i]}, (err, foundFolder) => {
-                    if(foundFolder){
-                        allFolders.push(foundFolder);
-                    } else {
-                        console.log('Folder not found' + err);
-                    }
-
-                    if(allFolders.length == req.session.company.folders.length){
-                        res.render('app/workspace', {folders: allFolders, sessionUser: req.session.user, sessionCompany: req.session.company});
-                    }
-                });
-            };
+            res.render('app/workspace', {folders: req.session.company.folders, sessionUser: req.session.user, sessionCompany: req.session.company});
         } else {
             res.redirect('/signin');
         }
@@ -229,15 +212,17 @@ module.exports = (server)=>{
     server.get('/app/workspace/:folderid', (req, res) => {
         if(req.session.user != undefined){
             var folderId = req.params.folderid.substr(1, req.params.folderid.length);
+
             Folder.findOne({_id: folderId}, (err, foundFolder) => {
                 if(foundFolder){
-                    req.session.folder = foundFolder;
                     res.render('app/folder', {folder: foundFolder, sessionUser: req.session.user, sessionCompany: req.session.company});
-                }
-                if(err) {
-                    console.log(err)
+                } else if(!foundFolder){
+                    console.log('No found Folder');
+                } else {
+                    console.log('Error' + err);
                 }
             });
+
         } else {
             res.redirect('/signin');
         }
@@ -385,7 +370,7 @@ module.exports = (server)=>{
                if(createdFolder) {
                     Company.findOneAndUpdate(
                         {_id: req.session.company._id},
-                        {$push: {folders: createdFolder._id}},
+                        {$push: {folders: {folderId: createdFolder._id, title: createdFolder.title, filesNo: 0 }}},
                         {new: true},
                         (err, updatedCompany)=>{
                         if(updatedCompany){
@@ -412,7 +397,18 @@ module.exports = (server)=>{
                 {new: true},
                 (err, updatedFolder) =>{
                     if(updatedFolder) {
-                        res.send({fileCreated: true, errorOccurred: false});
+                        Company.findOneAndUpdate(
+                            {_id: req.session.company._id, "folders.folderId": folderId},
+                            {$set: {"folders.$.filesNo": updatedFolder.files.length}},
+                            {new: true},
+                            (err, updatedCompany)=>{
+                            if(updatedCompany){
+                                    req.session.company = updatedCompany;
+                                    res.send({folderAdded: true, errorOccurred: false});
+                            } else {
+                                    res.send({folderAdded: false, errorOccurred: true});
+                            }
+                        });
                     } else {
                         console.log(err);
                         res.send({fileCreated: false, errorOccurred: true});
@@ -464,7 +460,7 @@ module.exports = (server)=>{
                     }
                 });
             } else {
-                res.redirect('/app/packages');
+                res.redirect('/app/dashboard');
             }
         } else {
             res.redirect('/signin');

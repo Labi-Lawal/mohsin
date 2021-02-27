@@ -8,13 +8,16 @@ const CompanySchema = Schema({
         userId: String,
         name: String
     }],
-    folders: [],
+    folders: [{
+        folderId: String,
+        title: String,
+        filesNo: Number,
+    }],
 });
 
 const Company = mongoose.model('companies', CompanySchema);
 
 const FolderSchema = Schema({
-    folderId: String,
     title: String,
     files: [{
         title: String,

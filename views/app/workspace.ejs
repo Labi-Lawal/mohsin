@@ -22,13 +22,13 @@
                         <div class="material-icons">add</div>
                     </div>
 
-                    <% folders.forEach(folder => { %>
-                        <a href="/app/workspace/:<%=folder._id%>">
+                    <% folders.forEach( folder => { %>
+                        <a href="/app/workspace/:<%=folder.folderId%>">
                             <div class="folder">
                                 <div class="top">
                                     <div class="material-icons">folder</div>
                                     <div class="no-of-files">
-                                        <%=folder.files.length%>
+                                        <%=folder.filesNo%>
                                     </div>
                                 </div>
                                 <div class="title">
